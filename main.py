@@ -35,19 +35,18 @@ def generate_excuse(issue: str) -> str:
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "excuse_html": None, "issue": ""})
+    return templates.TemplateResponse(request, "index.html", {"excuse_html": None, "issue": ""})
 
 @app.post("/", response_class=HTMLResponse)
 async def create_excuse(request: Request, issue: str = Form(...)):
     if not issue.strip():
-        return templates.TemplateResponse("index.html", {"request": request, "excuse_html": None, "issue": ""})
+        return templates.TemplateResponse(request, "index.html", {"excuse_html": None, "issue": ""})
         
     raw_markdown = generate_excuse(issue)
     # Convert markdown to HTML for safe rendering in template
     excuse_html = markdown.markdown(raw_markdown)
     
-    return templates.TemplateResponse("index.html", {
-        "request": request, 
+    return templates.TemplateResponse(request, "index.html", {
         "excuse_html": excuse_html, 
         "issue": issue
     })
