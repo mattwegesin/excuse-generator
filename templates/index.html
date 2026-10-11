@@ -62,8 +62,27 @@
 <script>
     document.querySelector('form').addEventListener('submit', function() {
         const btn = document.getElementById('generateBtn');
+        const snarkyLines = [
+            "Consulting the Architecture Review Board...",
+            "Blaming the intern...",
+            "Checking for BGP route flaps...",
+            "Drafting a synergistic paradigm shift...",
+            "Measuring Wi-Fi attenuation...",
+            "Updating the Jira ticket nobody reads...",
+            "Inventing new RF acronyms...",
+            "Optimizing the ROI of this excuse..."
+        ];
+        
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Consulting Stakeholders...';
+        
+        let i = 0;
+        const updateText = () => {
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>${snarkyLines[i % snarkyLines.length]}`;
+            i++;
+        };
+        
+        updateText(); // set initial
+        setInterval(updateText, 2000); // cycle every 2 seconds
     });
 </script>
 </body>
